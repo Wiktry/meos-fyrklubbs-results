@@ -1,0 +1,43 @@
+:root {
+    --highlight: #113b66;
+    --highlight-hover: hsl(from #113b66 h s calc(l + 10));
+    --borderColor: #efefef;
+    --favorite: #f8e200;
+
+    --bgColor-danger-muted: #ffebe9;
+    --bgColor-success-muted: #dafbe1;
+}
+
+html,
+body {
+    font-family: 'Roboto Variable', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    margin: 0;
+    height: min-content;
+}
+
+h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+th,
+td,
+span {
+    font-size: 0.875rem;
+}
+
+i {
+    height: 20px;
+    width: 20px;
+    display: grid;
+    place-items: center;
+
+    svg {
+        max-height: 100%;
+        max-width: 100%;
+    }
+}

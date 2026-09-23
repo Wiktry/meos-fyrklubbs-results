@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiMzBlNGU2YjljZTQ5YWZjMjk2OWYyNWFlZjA3ZDE2MTYiLCJ0IjoiOWYwZjdlZDctYmQ2Mi00Y2Y5LWIyZmYtZGVkMGY4NDljNzBkIiwicyI6Ik9EQTBNVFEzTXpFdE9ETXlaUzAwTVdabExUazJOVGd0WlRnd1lXWmhPVGczTkRVeiJ9
