@@ -10,6 +10,7 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       - DOCKER=true
+      - REMOTE_ADDR=${REMOTE_ADDR}
 
   tunnel:
     container_name: cloudflared-tunnel
@@ -17,4 +18,4 @@ services:
     restart: unless-stopped
     command: tunnel run
     environment:
-      - TUNNEL_TOKEN=eyJhIjoiMzBlNGU2YjljZTQ5YWZjMjk2OWYyNWFlZjA3ZDE2MTYiLCJ0IjoiOWYwZjdlZDctYmQ2Mi00Y2Y5LWIyZmYtZGVkMGY4NDljNzBkIiwicyI6Ik9EQTBNVFEzTXpFdE9ETXlaUzAwTVdabExUazJOVGd0WlRnd1lXWmhPVGczTkRVeiJ9
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
