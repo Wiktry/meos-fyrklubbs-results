@@ -103,12 +103,6 @@
 </div>
 
 <style>
-	.table-wrapper {
-		position: relative;
-		overflow: auto;
-		width: 100%;
-	}
-
 	h1 {
 		position: sticky;
 		width: fit-content;

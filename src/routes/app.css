@@ -58,3 +58,9 @@ i {
         max-width: 100%;
     }
 }
+
+.table-wrapper {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+}

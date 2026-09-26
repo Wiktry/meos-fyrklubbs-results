@@ -24,5 +24,6 @@ th:first-child {
     td:first-child,
     th:first-child {
         position: static;
+        border: 0;
     }
 }

@@ -29,7 +29,7 @@
 				<a href={resolve('/clubs')}><span>Klubbar</span></a>
 				<a href={resolve('/classes')}><span>Klasser</span></a>
 				<a href={resolve('/competitors')}><span>Deltagare</span></a>
-				<a href={resolve('/')}><i style="color: #fff;"><StarFullIcon /></i></a>
+				<a href={resolve('/favorites')}><i style="color: #fff;"><StarFullIcon /></i></a>
 			</div>
 		</nav>
 	</div>

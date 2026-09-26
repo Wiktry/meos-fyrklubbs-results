@@ -1,0 +1,1 @@
+export const FAVORITE_CMPS_KEY = 'FAVORITE_CMPS_KEY';
