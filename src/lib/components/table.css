@@ -1,0 +1,28 @@
+th, td {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+}
+
+td:not(:first-child) {
+    text-align: center;
+}
+
+td:first-child,
+th:first-child {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background-color: #fff;
+    border-right: 1px solid var(--borderColor);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.unlockFirstColumn {
+    td:first-child,
+    th:first-child {
+        position: static;
+    }
+}

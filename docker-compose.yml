@@ -6,6 +6,10 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - DOCKER=true
 
   tunnel:
     container_name: cloudflared-tunnel

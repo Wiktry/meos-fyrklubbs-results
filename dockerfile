@@ -13,13 +13,13 @@ RUN npm ci
 # Copy the rest of the application code
 COPY . .
 
+RUN npm run build
+
 # Expose the port your app listens on
 EXPOSE 3000
 
 # Run as non-root user (bookworm images include 'node' user)
 USER node
-
-RUN npm run build
 
 ENV NODE_ENV=production
 

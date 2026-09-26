@@ -70,6 +70,7 @@ const buildClass = function (cls: Class, orgCompetitors: Competitor[], group: Gr
 		order: cls.order,
 		classTime,
 		minCmp: groupClass?.minCmp ?? 0,
+		classCompetitors,
 		okCompetitors,
 		state: setState(),
 	}
@@ -111,11 +112,20 @@ const buildGroups = function ({ classes, competitors, organizations }: NonNullab
 				return (a.totalTime || Infinity) - (b.totalTime || Infinity);
 			});
 
-		console.log(orgs.map(org => org.totalTime));
+		const groupClasses = classes.reduce<(Class & { minCmp: number })[]>((res, cls) => {
+			const grpCls = group.classes.find(gCls => gCls.id === cls.id);
+			if (grpCls) {
+				res.push({
+					...cls,
+					minCmp: grpCls.minCmp,
+				});
+			}
+			return res;
+		}, []);
 
 		return {
 			id: group.id,
-			classes: group.classes,
+			classes: groupClasses,
 			orgs: orgs
 		}
 	});

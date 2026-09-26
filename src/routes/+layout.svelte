@@ -26,9 +26,9 @@
 		<nav>
 			<div class="nav-items">
 				<a href={resolve('/')}><span>Live</span></a>
-				<a href={resolve('/')}><span>Klubbar</span></a>
-				<a href={resolve('/')}><span>Klasser</span></a>
-				<a href={resolve('/')}><span>Deltagare</span></a>
+				<a href={resolve('/clubs')}><span>Klubbar</span></a>
+				<a href={resolve('/classes')}><span>Klasser</span></a>
+				<a href={resolve('/competitors')}><span>Deltagare</span></a>
 				<a href={resolve('/')}><i style="color: #fff;"><StarFullIcon /></i></a>
 			</div>
 		</nav>
@@ -47,6 +47,7 @@
 		grid-template-rows: 40px minmax(0, 1fr);
 		gap: 4px;
 		justify-content: center;
+		padding: 0 8px;
 	}
 
 	nav {

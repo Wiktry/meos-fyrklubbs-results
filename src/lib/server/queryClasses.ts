@@ -1,6 +1,7 @@
 import { StringToNumber } from "$lib/utils/zod";
 import z from "zod";
 import xmlParser from "./xmlParser";
+import { getAddress } from "./getAddress";
 
 const ClassValidator = z.object({
     MOPComplete: z.object({
@@ -20,7 +21,7 @@ const ClassValidator = z.object({
 
 export const queryClasses = async function () {
     try {
-        const response = await fetch('http://localhost:2009/meos?get=class');
+		const response = await fetch(`${getAddress()}/meos?get=class`);
         const xml = await response.text();
         const parsed = xmlParser.parse(xml);
         const validated = ClassValidator.parse(parsed);

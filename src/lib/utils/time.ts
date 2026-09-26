@@ -13,6 +13,6 @@ export const secondsToString = function (input: number) {
     return [toString(minutes), toString(seconds)].join(':');
 };
 
-export const millisecondsToString = function (input: number) {
+export const oneTenthSecondsToString = function (input: number) {
     return secondsToString(input / 10);
 }

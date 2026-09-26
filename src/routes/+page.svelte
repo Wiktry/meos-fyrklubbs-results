@@ -1,6 +1,11 @@
 <script lang="ts">
+    import { resolve } from '$app/paths';
+    import Table from '$lib/components/Table.svelte';
+    import TableData from '$lib/components/TableData.svelte';
+    import TableHead from '$lib/components/TableHead.svelte';
+    import TableRow from '$lib/components/TableRow.svelte';
     import { queryData } from '$lib/query.remote.js';
-	import { millisecondsToString } from '$lib/utils/time.js';
+	import { oneTenthSecondsToString } from '$lib/utils/time.js';
     import { onMount } from 'svelte';
 
 	let data = $derived(await queryData());
@@ -8,7 +13,7 @@
 	const ALL_CLASSES_KEY = 'ALL_CLASSES_ON_HOME';
 
 	let isMobile = $state(false);
-	let showAllClasses = $state(false);
+	let showAllClasses = $state(true);
 	const toggleAllClasses = function () {
 		if (showAllClasses) {
 			showAllClasses = false;
@@ -45,52 +50,55 @@
 	{/if}
 </div>
 
-<div class="table-wrapper">
+<div class="table-wrapper" style="">
 	{#each data.groups as group (group.id)}
-		{let groupClasses = data.classes.filter(cls => group.classes.some(grpCls => grpCls.id === cls.id))}
-
 		<h1>Grupp {group.id}</h1>
-		<table style="--columns: {showAllClasses ? group.classes.length : 1}; --column-width: {showAllClasses ? '64px' : '0px'};">
-			<thead>
-				<tr>
-					<th>Klubb</th>
-					{#if showAllClasses}
-						{#each groupClasses as cls (cls.id)}
-							<th scope="col">{cls.name}</th>
-						{/each}
-					{:else}
-						<th></th>
-					{/if}
-					<th>Tid</th>
-					<th>Efter</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each group.orgs as org (org.id)}
-					{let firstTime = group.orgs.at(0)?.totalTime ?? 0}
-					<tr class={{ 'row': true, 'dsq': org.state === 'DSQ' }}>
-						<td>{data.organizations.find(_org => _org.id === org.id)?.name}</td>
+		<div style="display: contents; --columns: {showAllClasses ? group.classes.length : 1}; --column-width: {showAllClasses ? '64px' : '0px'};">
+			<Table columns="minmax(120px, 1fr) repeat(var(--columns), var(--column-width)) repeat(2, 64px)">
+				{#snippet head()}
+					<TableRow head>
+						<TableHead>Klubb</TableHead>
 						{#if showAllClasses}
-							{#each org.classes as cls (cls.id)}
-								<td>{millisecondsToString(cls.classTime)}</td>
+							{#each group.classes as cls (cls.id)}
+								<TableHead>{cls.name} ({cls.minCmp})</TableHead>
 							{/each}
 						{:else}
-							<td></td>
+							<TableHead></TableHead>
 						{/if}
-						<td>
-							{millisecondsToString(org.totalTime)}
-						</td>
-						<td>
-							{#if org.totalTime > 0}
-								{millisecondsToString(org.totalTime - firstTime)}
+						<TableHead>Tid</TableHead>
+						<TableHead>Efter</TableHead>
+					</TableRow>
+				{/snippet}
+
+				{#snippet body()}
+					{#each group.orgs as org (org.id)}
+						{let firstTime = $derived(group.orgs.at(0)?.totalTime ?? 0)}
+						<TableRow dsq={org.state === 'DSQ'}>
+							<TableData>
+								<a class="club-link" href={resolve(`/clubs/${org.id}`)}>{org.name}</a>
+							</TableData>
+							{#if showAllClasses}
+								{#each org.classes as cls (cls.id)}
+									<TableData>{oneTenthSecondsToString(cls.classTime)}</TableData>
+								{/each}
 							{:else}
-								-- : --
+								<TableData></TableData>
 							{/if}
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+							<TableData>
+								{oneTenthSecondsToString(org.totalTime)}
+							</TableData>
+							<TableData>
+								{#if org.totalTime > 0}
+									{oneTenthSecondsToString(org.totalTime - firstTime)}
+								{:else}
+									-- : --
+								{/if}
+							</TableData>
+						</TableRow>
+					{/each}
+				{/snippet}
+			</Table>
+		</div>
 	{/each}
 </div>
 
@@ -107,61 +115,13 @@
 		left: 0;
 	}
 
-	table {
+	.club-link {
+		height: 100%;
+		width: 100%;
 		display: grid;
-		grid-template-columns: minmax(120px, 1fr) repeat(var(--columns), var(--column-width)) repeat(2, 64px);
-		column-gap: 8px;
-		margin-top: 8px;
-		margin-bottom: 24px;
-	}
-
-	thead,
-	tbody,
-	tr {
-		grid-column: 1/-1;
-		display: grid;
-		grid-template-columns: subgrid;
-	}
-
-	tr {
-		height: 32px;
-		border-bottom: 1px solid var(--borderColor);
-
-		&.dsq {
-			background-color: var(--bgColor-danger-muted);
-			td {
-				background-color: var(--bgColor-danger-muted);
-			}
-		}
-	}
-
-	.row:hover {
-		background-color: var(--borderColor);
-
-		td {
-			background-color: var(--borderColor);
-		}
-	}
-
-	th, td {
-		display: flex;
-		align-items: center;
-	}
-
-	td:not(:first-child) {
-		text-align: center;
-	}
-
-	td:first-child,
-	th:first-child {
-		text-align: left;
-		position: sticky;
-		left: 0;
-		background-color: #fff;
-		border-right: 1px solid var(--borderColor);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		align-content: center;
+		justify-content: start;
+		font-weight: 500;
 	}
 
 	.all-wrapper {

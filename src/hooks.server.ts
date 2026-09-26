@@ -1,14 +1,10 @@
 import { handleMeOS } from "$lib/server/handleMeos";
 
-let handleMeosTimeout: NodeJS.Timeout;
-
-import.meta.hot?.on('vite:beforeUpdate', () => {
-	clearTimeout(handleMeosTimeout);
-	handleQuery();
-});
+const handleMeosTimeout: { timeout: NodeJS.Timeout | undefined } = { timeout: undefined };
+console.log('handleMeosTimeout', handleMeosTimeout);
 
 const handleQuery = async function () {
-	clearTimeout(handleMeosTimeout);
+	clearTimeout(handleMeosTimeout.timeout);
 
     console.log('Running query...');
     try {
@@ -17,6 +13,6 @@ const handleQuery = async function () {
     } catch (error) {
         console.error(error);
     }
-    handleMeosTimeout = setTimeout(() => handleQuery(), 5000);
+    handleMeosTimeout.timeout = setTimeout(() => handleQuery(), 5000);
 }
 handleQuery();

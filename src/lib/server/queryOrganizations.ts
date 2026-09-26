@@ -1,6 +1,7 @@
 import { StringToNumber } from "$lib/utils/zod";
 import z from "zod";
 import xmlParser from "./xmlParser";
+import { getAddress } from "./getAddress";
 
 const OrganizationValidator = z.object({
     MOPComplete: z.object({
@@ -16,11 +17,11 @@ const OrganizationValidator = z.object({
 
 export const queryOrganizations = async function () {
     try {
-        const response = await fetch('http://localhost:2009/meos?get=organization');
+		const response = await fetch(`${getAddress()}/meos?get=organization`);
         const xml = await response.text();
         const parsed = xmlParser.parse(xml);
         const validated = OrganizationValidator.parse(parsed);
-        return validated;
+        return validated.filter(org => org.name !== 'Vakant');
     } catch (error) {
         console.error(error);
     }
