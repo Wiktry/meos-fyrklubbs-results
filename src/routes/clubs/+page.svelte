@@ -5,6 +5,10 @@
 	let { organizations } = $derived(await queryData());
 </script>
 
+<h1>Klubbar</h1>
+
+<div class="spacer"></div>
+
 <ul>
 	{#each organizations as org (org.id)}
 		<li>

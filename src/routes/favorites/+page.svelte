@@ -81,10 +81,6 @@
 {/if}
 
 <style>
-	.spacer {
-		height: 20px;
-	}
-
 	button {
 		height: 100%;
 		width: 100%;

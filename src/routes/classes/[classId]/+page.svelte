@@ -69,10 +69,6 @@
 </div>
 
 <style>
-	.spacer {
-		height: 20px;
-	}
-
 	h1 {
 		position: sticky;
 		width: fit-content;

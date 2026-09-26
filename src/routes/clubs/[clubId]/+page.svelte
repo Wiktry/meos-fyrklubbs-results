@@ -1,5 +1,9 @@
 <script lang="ts">
     import { page } from "$app/state";
+    import Table from "$lib/components/Table.svelte";
+    import TableData from "$lib/components/TableData.svelte";
+    import TableHead from "$lib/components/TableHead.svelte";
+    import TableRow from "$lib/components/TableRow.svelte";
     import { queryData } from "$lib/query.remote";
     import { oneTenthSecondsToString } from "$lib/utils";
 
@@ -12,24 +16,35 @@
 	 let currentOrg = $derived(currentGroup?.orgs.find(org => org.id === clubId));
 </script>
 
-<div class="spacer"></div>
-
 {#if currentGroup && currentOrg}
 	<h1>{currentOrg.name} - Grupp {currentGroup.id}</h1>
+
+	<div class="spacer"></div>
+
 	{#each currentOrg.classes as cls (cls.id)}
 		<h2>{cls.name} ({cls.okCompetitors.length} / {cls.classCompetitors.length})</h2>
 		<span>Minst {cls.minCmp} löpare måste bli godkända</span>
-		{#each cls.classCompetitors as cmp (cmp.id)}
-			<div class="">
-				{cmp.name}
-				{oneTenthSecondsToString(cmp.runningTime)}
-			</div>
-		{/each}
+			<Table columns="minmax(min-content, 1fr) 48px">
+				{#snippet head()}
+					<TableRow>
+						<TableHead>Deltagare</TableHead>
+						<TableHead>Tid</TableHead>
+					</TableRow>
+				{/snippet}
+				{#snippet body()}
+					{#each cls.classCompetitors as cmp (cmp.id)}
+						<TableRow>
+							<TableData>{cmp.name}</TableData>
+							<TableData>
+								{#if cmp.runningTime > 0}
+									{oneTenthSecondsToString(cmp.runningTime)}
+								{:else}
+									-- : --
+								{/if}
+							</TableData>
+						</TableRow>
+					{/each}
+				{/snippet}
+			</Table>
 	{/each}
 {/if}
-
-<style>
-	.spacer {
-		height: 20px;
-	}
-</style>

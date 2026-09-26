@@ -6,6 +6,10 @@
 	let openClasses = $derived(classes.filter(cls => !groups.some(grp => grp.classes.some(gCls => gCls.id === cls.id))))
 </script>
 
+<h1>Klasser</h1>
+
+<div class="spacer"></div>
+
 {#each groups as grp (grp.id)}
 	<h2>Grupp {grp.id}</h2>
 
@@ -16,6 +20,8 @@
 			</li>
 		{/each}
 	</ul>
+
+	<div class="spacer"></div>
 {/each}
 
 <h2>Öppna klasser</h2>

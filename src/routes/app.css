@@ -64,3 +64,27 @@ i {
     overflow: auto;
     width: 100%;
 }
+
+.spacer {
+    height: 20px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    height: 32px;
+    display: grid;
+    border-bottom: 1px solid var(--borderColor);
+
+    a {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        align-items: center;
+        padding: 0 16px;
+    }
+}
