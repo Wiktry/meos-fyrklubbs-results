@@ -5,7 +5,7 @@
     import TableHead from "$lib/components/TableHead.svelte";
     import TableRow from "$lib/components/TableRow.svelte";
     import { queryData } from "$lib/query.remote";
-    import { ClassStateRank, oneTenthSecondsToString } from "$lib/utils";
+    import { oneTenthSecondsToString } from "$lib/utils";
 
 	let classId = $derived(Number(page.params.classId));
 	let { classes, competitors, organizations } = $derived(await queryData());
@@ -13,8 +13,13 @@
 	let currentCompetitors = $derived(
 		competitors.filter(cmp => cmp.classId === classId)
 		.sort((a,b) => {
+			const getRank = function (val: string) {
+				if (val === 'DSQ') return 0;
+				return 1;
+			} 
+
 			if (a.state !== b.state) {
-				return ClassStateRank[a.state] - ClassStateRank[b.state];
+				return getRank(a.state) - getRank(b.state);
 			}
 			return (a.runningTime || Infinity) - (b.runningTime || Infinity);
 		})
