@@ -1,3 +1,5 @@
+import { ClassState } from '$lib/server/handleMeos.js';
+
 export * from './time.js';
 export * from './settings.js';
 
