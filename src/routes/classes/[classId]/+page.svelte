@@ -5,14 +5,19 @@
     import TableHead from "$lib/components/TableHead.svelte";
     import TableRow from "$lib/components/TableRow.svelte";
     import { queryData } from "$lib/query.remote";
-    import { oneTenthSecondsToString } from "$lib/utils";
+    import { ClassStateRank, oneTenthSecondsToString } from "$lib/utils";
 
 	let classId = $derived(Number(page.params.classId));
 	let { classes, competitors, organizations } = $derived(await queryData());
 	let currentClass = $derived(classes.find(cls => cls.id === classId));
 	let currentCompetitors = $derived(
 		competitors.filter(cmp => cmp.classId === classId)
-		.sort((a,b) => (a.runningTime || Infinity) - (b.runningTime || Infinity))
+		.sort((a,b) => {
+			if (a.state !== b.state) {
+				return ClassStateRank[a.state] - ClassStateRank[b.state];
+			}
+			return (a.runningTime || Infinity) - (b.runningTime || Infinity);
+		})
 	);
 	let firstTime = $derived(currentCompetitors.reduce((res, cmp) => Math.min(res, cmp.runningTime || Infinity), Infinity));
 </script>
@@ -48,14 +53,16 @@
 						</TableData>
 						<TableData>{org?.name}</TableData>
 						<TableData>
-							{#if cmp.runningTime > 0}
+							{#if cmp.state === 'DSQ'}
+								DSQ
+							{:else if cmp.runningTime > 0}
 								{oneTenthSecondsToString(cmp.runningTime)}
 							{:else}
 								-- : --
 							{/if}
 						</TableData>
 						<TableData>
-							{#if cmp.runningTime > 0}
+							{#if cmp.runningTime > 0 && cmp.state === 'OK'}
 								{oneTenthSecondsToString(cmp.runningTime - firstTime)}
 							{:else}
 								-- : --

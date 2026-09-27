@@ -1,7 +1,7 @@
 import { queryClasses } from './queryClasses';
 import { queryCompetitors } from './queryCompetitors';
 import { queryOrganizations } from './queryOrganizations';
-import { definedGroups } from '../utils';
+import { ClassStateRank, definedGroups } from '../utils';
 
 type Group = typeof definedGroups[number];
 type Competitor = NonNullable<Awaited<ReturnType<typeof queryCompetitors>>>[number];
@@ -25,8 +25,6 @@ export const ClassState = {
 	ONG: 'ONG', // Still in flux
 	DSQ: 'DSQ', // Disqualified
 } as const;
-
-const ClassStateRank = Object.fromEntries(Object.keys(ClassState).map((key, i) => [key, i]));
 
 const queryDataFromMeOS = async function () {
 	const competitors = await queryCompetitors();
