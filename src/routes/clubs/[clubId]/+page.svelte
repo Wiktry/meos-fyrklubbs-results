@@ -32,7 +32,18 @@
 					</TableRow>
 				{/snippet}
 				{#snippet body()}
-					{#each cls.classCompetitors as cmp (cmp.id)}
+					{#each cls.classCompetitors.sort((a,b) => {{
+						const getRank = function (val: string) {
+							if (val === 'DSQ') return 10;
+							if (val === 'OK') return 0;
+							return 5;
+						} 
+
+						if (a.state !== b.state) {
+							return getRank(a.state) - getRank(b.state);
+						}
+						return (a.runningTime || Infinity) - (b.runningTime || Infinity);
+					}}) as cmp (cmp.id)}
 						<TableRow>
 							<TableData>{cmp.name}</TableData>
 							<TableData>
