@@ -1,7 +1,7 @@
 import { queryClasses } from './queryClasses';
 import { queryCompetitors } from './queryCompetitors';
 import { queryOrganizations } from './queryOrganizations';
-import { ClassStateRank, definedGroups } from '../utils';
+import { ClassState, ClassStateRank, definedGroups } from '../utils';
 
 type Group = typeof definedGroups[number];
 type Competitor = NonNullable<Awaited<ReturnType<typeof queryCompetitors>>>[number];
