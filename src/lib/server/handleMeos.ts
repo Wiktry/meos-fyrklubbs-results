@@ -19,13 +19,6 @@ export const getMeosData = function () {
 	return meosData;
 }
 
-export const ClassState = {
-	ERR: 'ERR', // An error, should never happen
-	PAS: 'PAS', // Has enough to pass
-	ONG: 'ONG', // Still in flux
-	DSQ: 'DSQ', // Disqualified
-} as const;
-
 const queryDataFromMeOS = async function () {
 	const competitors = await queryCompetitors();
 	const classes = await queryClasses();
