@@ -15,7 +15,8 @@
 		.sort((a,b) => {
 			const getRank = function (val: string) {
 				if (val === 'DSQ') return 10;
-				return 0;
+				if (val === 'OK') return 0;
+				return 5;
 			} 
 
 			if (a.state !== b.state) {
