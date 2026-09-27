@@ -14,8 +14,8 @@
 		competitors.filter(cmp => cmp.classId === classId)
 		.sort((a,b) => {
 			const getRank = function (val: string) {
-				if (val === 'DSQ') return 0;
-				return 1;
+				if (val === 'DSQ') return 10;
+				return 0;
 			} 
 
 			if (a.state !== b.state) {
