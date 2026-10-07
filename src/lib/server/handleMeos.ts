@@ -76,10 +76,10 @@ const buildClass = function (cls: Class, orgCompetitors: Competitor[], group: Gr
 }
 
 const buildOrg = function (org: Organization, competitors: Competitor[], classes: Class[], group: Group) {
-	const orgCompetitors = competitors.filter(cmp => cmp.organizationId === org.id);
+	const orgClasses = classes.filter(cls => group.classes.some(_cls => _cls.id === cls.id));
+	const orgCompetitors = competitors.filter(cmp => cmp.organizationId === org.id && orgClasses.some(cls => cls.id === cmp.classId));
 
-	const handledClasses = classes
-		.filter(cls => group.classes.some(_cls => _cls.id === cls.id))
+	const handledClasses = orgClasses
 		.map(cls => buildClass(cls, orgCompetitors, group))
 		.sort((a,b) => a.order - b.order);
 
@@ -94,6 +94,7 @@ const buildOrg = function (org: Organization, competitors: Competitor[], classes
 		name: org.name,
 		classes: handledClasses,
 		competitors: orgCompetitors,
+		okCompetitors: orgCompetitors.filter(cmp => cmp.state === 'OK'),
 		totalTime: handledClasses.reduce((res, cls) => res + cls.classTime, 0),
 		state: setState(),
 	}
@@ -125,7 +126,8 @@ const buildGroups = function ({ classes, competitors, organizations }: NonNullab
 		return {
 			id: group.id,
 			classes: groupClasses,
-			orgs: orgs
+			orgs: orgs,
+			movements: group.movements,
 		}
 	});
 }

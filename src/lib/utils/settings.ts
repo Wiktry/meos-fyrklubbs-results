@@ -8,6 +8,7 @@ interface Group {
         minCmp: number;
     }[];
     orgs: number[];
+	movements: { up: number, down: number };
 }
 
 export const definedGroups: Group[] = [
@@ -29,6 +30,7 @@ export const definedGroups: Group[] = [
             639, // Skåneslättens OL
             125, // Helsingborgs SOK
         ],
+		movements: { up: 0, down: 1 }
     },
     {
         id: 'B',
@@ -49,6 +51,7 @@ export const definedGroups: Group[] = [
             169, // Hästveda OK
             258, // Malmö OK
         ],
+		movements: { up: 1, down: 1 }
     },
     {
         id: 'C',
@@ -70,6 +73,7 @@ export const definedGroups: Group[] = [
             165, // Härlövs IF
             132, // Eslövs FK
         ],
+		movements: { up: 1, down: 2 }
     },
     {
         id: 'D',
@@ -91,6 +95,7 @@ export const definedGroups: Group[] = [
             228, // IS Kullen
             558, // OK Kompassen
         ],
+		movements: { up: 2, down: 2 }
     },
     {
         id: 'E',
@@ -118,6 +123,7 @@ export const definedGroups: Group[] = [
 			317, // Rävetofta OK
 			392, // Tockarps IK
 		],
+		movements: { up: 2, down: 0 }
     }
 ];
 

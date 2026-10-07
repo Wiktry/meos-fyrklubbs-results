@@ -20,5 +20,6 @@ export const CompetitorState = {
     'UNKNOWN': 'UNKNOWN',
     'OK': 'OK',
     'NO_TIMING': 'NO_TIMING',
+	'NO_START': 'NO_START',
     'DSQ': 'DSQ',
 } as const;

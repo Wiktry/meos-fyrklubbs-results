@@ -18,6 +18,7 @@ const CompetitorValidator = z.object({
                     if (value === 0) return CompetitorState.UNKNOWN;
                     else if (value === 1) return CompetitorState.OK;
                     else if (value === 2) return CompetitorState.NO_TIMING;
+					else if (value === 20) return CompetitorState.NO_START;
                     return CompetitorState.DSQ;
                 }).pipe(z.enum(CompetitorState))
             }),
