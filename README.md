@@ -1,4 +1,8 @@
-# sv
+# Meos Resultat
+
+Ett litet project byggt i Sveltekit för att visa resultat under och efter en fyrklubbstävling.
+
+## sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
