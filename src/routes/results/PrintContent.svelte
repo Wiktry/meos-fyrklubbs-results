@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '@fontsource-variable/roboto';
-	import { type MeosData } from "$lib/query.remote";
-    import { oneTenthSecondsToString } from "$lib/utils";
+	import { type MeosData } from "#lib/query.remote";
+	import { oneTenthSecondsToString } from "#lib/utils";
 
 	let { groups, classes, competitors }: MeosData = $props();
 
@@ -20,8 +20,8 @@
 			startCmps,
 			okCmps,
 			competetive: false,
-		}
-	}
+		};
+	};
 
 	const buildTotalGroup = function () {
 		const classes = [
@@ -47,8 +47,8 @@
 			startCmps: handledCmps.filter(cmp => cmp.state !== 'NO_START'),
 			okCmps: handledCmps.filter(cmp => cmp.state === 'OK'),
 			competetive: false,
-		}
-	}
+		};
+	};
 </script>
 
 <article>
@@ -109,21 +109,21 @@
 				startCmps,
 				okCmps,
 				competetive: true,
-			}
+			};
 		}),
 		buildOpenGroups(),
 		buildTotalGroup(),
 	] as group (group.id)}
 		<div class="header">
 			<h2>
-				{#if !group.competetive }
+				{#if !group.competetive}
 					{group.id}
 				{:else}
 					Grupp {group.id}
 				{/if}
 			</h2>
 		</div>
-		<table class={{ 'total': group.id === 'Totalt'}}>
+		<table class={{ total: group.id === 'Totalt'}}>
 			<thead>
 				<tr>
 					<th></th>

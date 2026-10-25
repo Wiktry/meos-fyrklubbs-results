@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { resolve } from '$app/paths';
-    import Table from '$lib/components/Table.svelte';
-    import TableData from '$lib/components/TableData.svelte';
-    import TableHead from '$lib/components/TableHead.svelte';
-    import TableRow from '$lib/components/TableRow.svelte';
-    import { queryData } from '$lib/query.remote.js';
-	import { oneTenthSecondsToString } from '$lib/utils/time.js';
-    import { onMount } from 'svelte';
+	import { resolve } from '$app/paths';
+	import Table from '#lib/components/Table.svelte';
+	import TableData from '#lib/components/TableData.svelte';
+	import TableHead from '#lib/components/TableHead.svelte';
+	import TableRow from '#lib/components/TableRow.svelte';
+	import { queryData } from '#lib/query.remote.js';
+	import { oneTenthSecondsToString } from '#lib/utils/time.js';
+	import { onMount } from 'svelte';
 
 	let data = $derived(await queryData());
 
@@ -22,7 +22,7 @@
 			showAllClasses = true;
 			localStorage.setItem(ALL_CLASSES_KEY, 'true');
 		}
-	}
+	};
 
 	onMount(() => {
 		showAllClasses = localStorage.getItem(ALL_CLASSES_KEY) === 'true';
@@ -43,7 +43,7 @@
 	{#if isMobile}
 		<button class="show-all-classes" onclick={toggleAllClasses}>
 			<span>Alla klasser</span>
-			<div class={{ 'toggle': true, 'toggled': showAllClasses }}>
+			<div class={{ toggle: true, toggled: showAllClasses }}>
 				<span class="toggle-item"></span>
 			</div>
 		</button>
@@ -72,7 +72,7 @@
 
 				{#snippet body()}
 					{#each group.orgs as org (org.id)}
-						{let firstTime = $derived(group.orgs.at(0)?.totalTime ?? 0)}
+						{let firstTime = $derived(group.orgs.at(0)?.totalTime ?? 0);}
 						<TableRow dsq={org.state === 'DSQ'}>
 							<TableData>
 								<a class="club-link" href={resolve(`/clubs/${org.id}`)}>{org.name}</a>

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import '@fontsource-variable/roboto';
 	import './app.css';
-	import favicon from '$lib/assets/favicon.svg';
-    import { resolve } from '$app/paths';
-    import StarFullIcon from '$lib/assets/icons/StarFullIcon.svelte';
-    import { onMount } from 'svelte';
-    import { queryData } from '$lib/query.remote';
+	import favicon from '#lib/assets/favicon.svg';
+	import { resolve } from '$app/paths';
+	import StarFullIcon from '#lib/assets/icons/StarFullIcon.svelte';
+	import { onMount } from 'svelte';
+	import { queryData } from '#lib/query.remote.js';
 
 	let { children } = $props();
 

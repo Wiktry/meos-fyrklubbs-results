@@ -29,7 +29,7 @@
 
 		element.contentDocument?.fonts.load('400 1em "Roboto Variable"');
 		element.contentDocument?.fonts.load('600 1em "Roboto Variable"');
-		// element.contentDocument?.fonts.ready;
+	// element.contentDocument?.fonts.ready;
 	};
 
 	export const doPrint = async function () {

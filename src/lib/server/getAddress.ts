@@ -1,7 +1,7 @@
-import { env } from "$env/dynamic/private";
+import { DOCKER, REMOTE_ADDR } from '$app/env/private';
 
 export const getAddress = function () {
-	if (env.REMOTE_ADDR) return env.REMOTE_ADDR;
-	if (env.DOCKER === 'true') return 'http://host.docker.internal:2009';
+	if (REMOTE_ADDR) return REMOTE_ADDR;
+	if (DOCKER) return 'http://host.docker.internal:2009';
 	return 'http://localhost:2009';
 };

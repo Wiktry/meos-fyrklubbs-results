@@ -1,13 +1,13 @@
 <script lang="ts">
-    import PrintFrame from "$lib/components/PrintFrame.svelte";
-	import { queryData } from "$lib/query.remote";
-    import { oneTenthSecondsToString } from "$lib/utils";
-    import ResultsContent from "./PrintContent.svelte";
+	import PrintFrame from "#lib/components/PrintFrame.svelte";
+	import { queryData } from "#lib/query.remote";
+	import { oneTenthSecondsToString } from "#lib/utils";
+	import ResultsContent from "./PrintContent.svelte";
 
 	let meosData = $derived(await queryData());
 	let { groups } = $derived(meosData);
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	 
 	let printFrame = $state<PrintFrame<any>>();
 </script>
 

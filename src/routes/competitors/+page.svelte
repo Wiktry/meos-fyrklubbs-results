@@ -1,28 +1,28 @@
 <script lang="ts">
-    import StarEmptyIcon from "$lib/assets/icons/StarEmptyIcon.svelte";
-    import StarFullIcon from "$lib/assets/icons/StarFullIcon.svelte";
-    import Pagination from "$lib/components/Pagination.svelte";
-    import Table from "$lib/components/Table.svelte";
-    import TableData from "$lib/components/TableData.svelte";
-    import TableHead from "$lib/components/TableHead.svelte";
-    import TableRow from "$lib/components/TableRow.svelte";
-    import { queryData } from "$lib/query.remote";
-    import { oneTenthSecondsToString } from "$lib/utils";
-    import { FAVORITE_CMPS_KEY } from "$lib/utils/keys";
-    import { FavoriteCmpsValidator } from "$lib/utils/zod";
-    import { onMount } from "svelte";
+	import StarEmptyIcon from "#lib/assets/icons/StarEmptyIcon.svelte";
+	import StarFullIcon from "#lib/assets/icons/StarFullIcon.svelte";
+	import Pagination from "#lib/components/Pagination.svelte";
+	import Table from "#lib/components/Table.svelte";
+	import TableData from "#lib/components/TableData.svelte";
+	import TableHead from "#lib/components/TableHead.svelte";
+	import TableRow from "#lib/components/TableRow.svelte";
+	import { queryData } from "#lib/query.remote";
+	import { oneTenthSecondsToString } from "#lib/utils";
+	import { FAVORITE_CMPS_KEY } from "#lib/utils/keys";
+	import { FavoriteCmpsValidator } from "#lib/utils/zod";
+	import { onMount } from "svelte";
 
 	let { competitors, classes, organizations } = $derived(await queryData());
 
 	let cmpSearch = $state('');
-	let activeCmps = $derived(competitors.filter(cmp => cmp.name.toLocaleLowerCase().includes(cmpSearch.toLocaleLowerCase())))
+	let activeCmps = $derived(competitors.filter(cmp => cmp.name.toLocaleLowerCase().includes(cmpSearch.toLocaleLowerCase())));
 
 	let currentPage = $state(0);
 	let totalPages = $derived(Math.ceil(activeCmps.length / 40));
 
 	const onPageChange = function (newPage: number) {
 		currentPage = newPage;
-	}
+	};
 
 	let favoriteCmps = $state<number[]>([]);
 
@@ -33,7 +33,7 @@
 			favoriteCmps.push(id);
 		}
 		localStorage.setItem(FAVORITE_CMPS_KEY, JSON.stringify(favoriteCmps));
-	}
+	};
 
 	onMount(() => {
 		favoriteCmps = FavoriteCmpsValidator.parse(JSON.parse(localStorage.getItem(FAVORITE_CMPS_KEY) ?? '[]'));
@@ -59,8 +59,8 @@
 		{/snippet}
 		{#snippet body()}
 			{#each activeCmps.slice(currentPage * 40, currentPage * 40 + 40) as cmp (cmp.id)}
-				{let cls = $derived(classes.find(cls => cls.id === cmp.classId))}
-				{let org = $derived(organizations.find(org => org.id === cmp.organizationId))}
+				{let cls = $derived(classes.find(cls => cls.id === cmp.classId));}
+				{let org = $derived(organizations.find(org => org.id === cmp.organizationId));}
 
 				<TableRow>
 					<TableData>

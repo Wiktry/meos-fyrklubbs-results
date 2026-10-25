@@ -1,28 +1,28 @@
-import { StringToNumber } from "$lib/utils/zod";
+import { StringToNumber } from "#lib/utils/zod";
 import z from "zod";
 import xmlParser from "./xmlParser";
 import { getAddress } from "./getAddress";
 
 const OrganizationValidator = z.object({
-    MOPComplete: z.object({
-        org: z.object({
-            '#text': z.string(),
-            '@_id': StringToNumber,
-        }).array(),
-    }),
+	MOPComplete: z.object({
+		org: z.object({
+			'#text': z.string(),
+			'@_id': StringToNumber,
+		}).array(),
+	}),
 }).transform(obj => obj.MOPComplete.org.map(org => ({
-    id: org['@_id'],
-    name: org['#text'],
+	id: org['@_id'],
+	name: org['#text'],
 })));
 
 export const queryOrganizations = async function () {
-    try {
+	try {
 		const response = await fetch(`${getAddress()}/meos?get=organization`);
-        const xml = await response.text();
-        const parsed = xmlParser.parse(xml);
-        const validated = OrganizationValidator.parse(parsed);
-        return validated.filter(org => org.name !== 'Vakant');
-    } catch (error) {
-        console.error(error);
-    }
-}
+		const xml = await response.text();
+		const parsed = xmlParser.parse(xml);
+		const validated = OrganizationValidator.parse(parsed);
+		return validated.filter(org => org.name !== 'Vakant');
+	} catch (error) {
+		console.error(error);
+	}
+};

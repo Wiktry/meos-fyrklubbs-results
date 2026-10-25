@@ -17,7 +17,7 @@ let meosData: {
 
 export const getMeosData = function () {
 	return meosData;
-}
+};
 
 const ClassState = {
 	ERR: 'ERR', // An error, should never happen
@@ -32,7 +32,7 @@ const queryDataFromMeOS = async function () {
 	const classes = await queryClasses();
 	const organizations = await queryOrganizations();
 
-	if (!competitors || !classes || !organizations) return;	
+	if (!competitors || !classes || !organizations) return;
 
 	return { competitors, classes, organizations };
 };
@@ -45,22 +45,22 @@ const buildClass = function (cls: Class, orgCompetitors: Competitor[], group: Gr
 	const cmpNotDsq = classCompetitors.filter(cmp => cmp.state !== 'DSQ').length;
 
 	const okCompetitors = classCompetitors.filter(cmp => cmp.state === 'OK');
-	const fastestCompetitors = okCompetitors.sort((a,b) => a.runningTime - b.runningTime).slice(0, groupClass?.minCmp);
+	const fastestCompetitors = okCompetitors.sort((a, b) => a.runningTime - b.runningTime).slice(0, groupClass?.minCmp);
 
 	const classTime = fastestCompetitors.reduce((res, val) => res + val.runningTime, 0);
 
 	const setState = function () {
 		// If no group class error, this should be impossible
-		if (!groupClass) return ClassState.ERR; 
+		if (!groupClass) return ClassState.ERR;
 		// If there's enough OK competitors to match the minCmp, the class is passing
-		if (fastestCompetitors.length >= groupClass.minCmp) return ClassState.PAS; 
-		// If there's still enough active 
-		if (cmpNotDsq >= groupClass.minCmp) return ClassState.ONG; 
+		if (fastestCompetitors.length >= groupClass.minCmp) return ClassState.PAS;
+		// If there's still enough active
+		if (cmpNotDsq >= groupClass.minCmp) return ClassState.ONG;
 
 		// ToDo: Remove for competition
 		// if (classCompetitors.length < groupClass.minCmp) return ClassState.ONG;
 
-		return ClassState.DSQ; 
+		return ClassState.DSQ;
 	};
 
 	return {
@@ -72,8 +72,8 @@ const buildClass = function (cls: Class, orgCompetitors: Competitor[], group: Gr
 		classCompetitors,
 		okCompetitors,
 		state: setState(),
-	}
-}
+	};
+};
 
 const buildOrg = function (org: Organization, competitors: Competitor[], classes: Class[], group: Group) {
 	const orgClasses = classes.filter(cls => group.classes.some(_cls => _cls.id === cls.id));
@@ -81,13 +81,13 @@ const buildOrg = function (org: Organization, competitors: Competitor[], classes
 
 	const handledClasses = orgClasses
 		.map(cls => buildClass(cls, orgCompetitors, group))
-		.sort((a,b) => a.order - b.order);
+		.sort((a, b) => a.order - b.order);
 
 	const setState = function () {
 		if (handledClasses.some(cls => cls.state === 'DSQ')) return ClassState.DSQ;
 		if (handledClasses.every(cls => cls.state === 'PAS')) return ClassState.PAS;
 		return ClassState.ONG;
-	}
+	};
 
 	return {
 		id: org.id,
@@ -97,15 +97,15 @@ const buildOrg = function (org: Organization, competitors: Competitor[], classes
 		okCompetitors: orgCompetitors.filter(cmp => cmp.state === 'OK'),
 		totalTime: handledClasses.reduce((res, cls) => res + cls.classTime, 0),
 		state: setState(),
-	}
-}
+	};
+};
 
 const buildGroups = function ({ classes, competitors, organizations }: NonNullable<Awaited<ReturnType<typeof queryDataFromMeOS>>>) {
-	return definedGroups.map(group => {
+	return definedGroups.map((group) => {
 		const orgs = organizations
 			.filter(org => group.orgs.includes(org.id))
 			.map(org => buildOrg(org, competitors, classes, group))
-			.sort((a,b) => {
+			.sort((a, b) => {
 				if (a.state !== b.state) {
 					return ClassStateRank[a.state] - ClassStateRank[b.state];
 				}
@@ -128,9 +128,9 @@ const buildGroups = function ({ classes, competitors, organizations }: NonNullab
 			classes: groupClasses,
 			orgs: orgs,
 			movements: group.movements,
-		}
+		};
 	});
-}
+};
 
 export const handleMeOS = async function () {
 	const response = await queryDataFromMeOS();
@@ -143,4 +143,4 @@ export const handleMeOS = async function () {
 		organizations: response.organizations,
 		groups: data,
 	};
-}
+};

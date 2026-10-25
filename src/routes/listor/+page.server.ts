@@ -1,7 +1,7 @@
-import { getMeosData } from "$lib/server/handleMeos";
+import { getMeosData } from "#lib/server/handleMeos";
 
 export const load = async function () {
-    // await queryDataFromMeOS();
+	// await queryDataFromMeOS();
 
-    return { ...getMeosData() };
-}
+	return { ...getMeosData() };
+};

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { resolve } from "$app/paths";
-    import { queryData } from "$lib/query.remote";
+	import { resolve } from "$app/paths";
+	import { queryData } from "#lib/query.remote";
 
 	let { organizations } = $derived(await queryData());
 </script>

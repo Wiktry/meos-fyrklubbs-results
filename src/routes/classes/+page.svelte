@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { resolve } from "$app/paths";
-    import { queryData } from "$lib/query.remote";
+	import { resolve } from "$app/paths";
+	import { queryData } from "#lib/query.remote";
 
 	let { groups, classes } = $derived(await queryData());
-	let openClasses = $derived(classes.filter(cls => !groups.some(grp => grp.classes.some(gCls => gCls.id === cls.id))))
+	let openClasses = $derived(classes.filter(cls => !groups.some(grp => grp.classes.some(gCls => gCls.id === cls.id))));
 </script>
 
 <h1>Klasser</h1>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import './table.css';
-    import type { Snippet } from "svelte";
+	import type { Snippet } from "svelte";
 
 	interface Props {
 		head: Snippet;
